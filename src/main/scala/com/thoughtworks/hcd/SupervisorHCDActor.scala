@@ -3,6 +3,7 @@ package com.thoughtworks.hcd
 import akka.actor.Actor.Receive
 import akka.actor.SupervisorStrategy.{Restart, Resume, Stop}
 import akka.actor.{Actor, ActorLogging, ActorRef, ActorSelection, OneForOneStrategy, Props, SupervisorStrategy}
+import com.thoughtworks.common.CommandMessage
 import com.thoughtworks.hcd.HCDActor.{FatalError, MajorError, MinorError}
 
 class SupervisorHCDActor extends Actor with ActorLogging{
@@ -28,11 +29,13 @@ class SupervisorHCDActor extends Actor with ActorLogging{
   }
 
   override def receive: Receive = {
-    case command => {
+    case command: CommandMessage => {
       println(s"SupervisorHCDActor received command $command")
       val hcdActorSelection: ActorSelection = context.actorSelection("HCD1")
       hcdActorSelection.forward(command)
     }
+
+    case _ => println(s"Invalid command")
   }
 }
 
