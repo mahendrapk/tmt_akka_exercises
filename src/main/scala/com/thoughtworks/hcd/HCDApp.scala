@@ -9,6 +9,6 @@ object HCDApp extends App{
   val hcdSupervisorActorRef: ActorRef = actorSystem.actorOf(SupervisorHCDActor.props(), "Supervisor-HCD")
 
   for(a <- 0 until 10){
-    hcdSupervisorActorRef ! new CommandMessage(s"Move HCD to $a")
+    hcdSupervisorActorRef ! new CommandMessage(a.toString)
   }
 }
