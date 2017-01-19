@@ -15,6 +15,8 @@ lazy val root = (project in file(".")).
 //      Akka.`akka-ddata`,
 //      Libs.`scala-async`,
 //      Libs.`chill-akka`,
-      Libs.scalatest % Test
+      Libs.scalatest % Test,
+      Libs.redis,
+      Libs.zeromq
     )
   )
