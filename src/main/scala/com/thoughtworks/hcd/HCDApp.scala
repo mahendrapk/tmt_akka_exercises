@@ -1,11 +1,15 @@
 package com.thoughtworks.hcd
 
 import akka.actor.{ActorRef, ActorSystem}
-import com.sun.org.apache.xml.internal.security.Init
 import com.thoughtworks.common.CommandMessage
+import com.typesafe.config.ConfigFactory
 
 object HCDApp extends App{
-  private val actorSystem = ActorSystem("ActorSystem-HCD")
+//  val config = ConfigFactory
+//    .parseString("akka.remote.netty.tcp.port=2554")
+
+  private val actorSystem = ActorSystem("ActorSystem-HCD",ConfigFactory.load())
+
   val hcdSupervisorActorRef: ActorRef = actorSystem.actorOf(SupervisorHCDActor.props(), "Supervisor-HCD")
 
   println(hcdSupervisorActorRef)

@@ -22,10 +22,6 @@ private class HCDActor extends Actor with ActorLogging{
         println(s"Throwing MajorError")
         throw new MajorError
       }
-      else if(counter == 9.toString) {
-        println(s"Throwing FatalError")
-        throw new FatalError
-      }
       else
         println(s"Handled message: $counter")
     }
