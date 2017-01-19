@@ -5,7 +5,7 @@ import com.thoughtworks.common.{CommandMessage, EventMessage}
 
 private class AssemblyActor extends Actor with ActorLogging{
 
-  val actorSelection: ActorSelection = ("akka://ActorSystem-HCD/user/Supervisor-HCD")
+  val actorSelection: ActorSelection = context.actorSelection("akka://ActorSystem-HCD/user/Supervisor-HCD")
   var hcdActor: ActorRef = _
 
 
