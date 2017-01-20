@@ -1,7 +1,12 @@
 package com.thoughtworks.assembly
 
-import akka.actor.{Actor, ActorIdentity, ActorLogging, ActorRef, ActorSelection, Stash, Identify, Props}
-import com.thoughtworks.common.{CommandMessage, EventMessage}
+import java.util.concurrent
+
+import akka.actor.{Actor, ActorIdentity, ActorLogging, ActorRef, ActorSelection, Identify, Props, Stash}
+import com.thoughtworks.common.{CommandMessage, EventMessage, ResolveHCDReference}
+
+import scala.concurrent.duration._
+import scala.concurrent.ExecutionContext.Implicits.global;
 
 private class AssemblyActor extends Actor with ActorLogging with Stash{
 
@@ -11,6 +16,8 @@ private class AssemblyActor extends Actor with ActorLogging with Stash{
   var hcdActor: ActorRef = _
 
   override def preStart(): Unit = {
+    context.system.scheduler.scheduleOnce(500 milliseconds, self, ResolveHCDReference)
+    println("message scheduled")
     actorSelection ! Identify(1)
   }
 
@@ -21,6 +28,12 @@ private class AssemblyActor extends Actor with ActorLogging with Stash{
       hcdActor = actorRef
       context.become(commandReady)
       unstashAll()
+    }
+
+    case ResolveHCDReference => {
+      actorSelection ! Identify(1)
+      context.system.scheduler.scheduleOnce(500 milliseconds, self, ResolveHCDReference)
+      println("message scheduled again")
     }
 
     case command : CommandMessage =>

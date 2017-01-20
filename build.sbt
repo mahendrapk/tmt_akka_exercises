@@ -10,6 +10,9 @@ lazy val root = (project in file(".")).
     libraryDependencies ++= Seq(
       Akka.`akka-actor`,
       Akka.`akka-remote`,
+      Akka.`akka-http`,
+      Akka.`akka-http-core`,
+      Akka.`akka-http-spray-json`,
 //      Akka.`akka-cluster`,
 //      Akka.`akka-stream`,
 //      Akka.`akka-ddata`,

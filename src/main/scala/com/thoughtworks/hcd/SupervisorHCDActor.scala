@@ -31,8 +31,7 @@ class SupervisorHCDActor extends Actor with ActorLogging{
   override def receive: Receive = {
     case command: CommandMessage => {
       println(s"SupervisorHCDActor received command $command")
-      val hcdActorSelection: ActorSelection = context.actorSelection("HCD1")
-      hcdActorSelection.forward(command)
+      hcdActorRef ! command
     }
 
     case _ => println(s"Invalid command")
